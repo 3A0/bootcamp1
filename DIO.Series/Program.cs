@@ -1,5 +1,5 @@
 ﻿using DIO.Series.Classes;
-using DIO.Series.Enum;
+using DIO.Series.Enums;
 using System;
 
 namespace DIO.Series
@@ -7,7 +7,6 @@ namespace DIO.Series
     public class Program
     {
         static SerieRepositorio repositorio = new SerieRepositorio();
-
         static void Main(string[] args)
         {
             string opcaoUsuario = ObterOpcaoUsuario();
@@ -20,7 +19,7 @@ namespace DIO.Series
                         ListarSeries();
                         break;
                     case "2":
-                        //InserirSerie();
+                        InserirSerie();
                         break;
                     case "3":
                         //AtualizarSerie();
@@ -36,7 +35,7 @@ namespace DIO.Series
                         break;
 
                     default:
-                        throw new ArgumentOutRangeException();
+                        throw new ArgumentOutOfRangeException();
 
                 }
                 opcaoUsuario = ObterOpcaoUsuario();
@@ -69,11 +68,10 @@ namespace DIO.Series
             Console.WriteLine("Inserir nova série");
             //https://docs.microsoft.com/pt.br/dotnet/api/system.enum.getvalues?view=netcore-3.1
             //https://docs.microsoft.com/pt.br/dotnet/api/system.enum.getname?view=netcore-3.1
-            
-            var a = enum.GetValues(typeof(Genero));
-            foreach (var i in enum.GetValues(typeof(Genero)) )
+
+            foreach (var i in Enum.GetValues(typeof(Genero)))
             {
-                Console.WriteLine("{0} .{1}", i, enum.GetName(typeof(Genero), i));
+                Console.WriteLine("{0} .{1}", i, Enum.GetName(typeof(Genero), i));
             }
 
             Console.Write("Digite o genêro entre as opções acima: ");
@@ -83,17 +81,16 @@ namespace DIO.Series
             string entradaTitulo = Console.ReadLine();
 
             Console.Write("Digite o Ano de inicio da série: ");
-            int entradaAno = int.Parse(Console.ReadLine));
+            int entradaAno = int.Parse(Console.ReadLine());
 
             Console.Write("Digite a Descrição da série: ");
             string entradaDescricao = Console.ReadLine();
 
             Serie novaSerie = new Serie(id: repositorio.ProximoId(),
-                                        genero: (Genero)entradaGenero,
-                                        titulo: entradaTitulo,
-                                        ano: entradaAno,
-                                        descricao: entradaDescricao);
-
+                                        (Genero)entradaGenero,
+                                        entradaTitulo,
+                                        entradaDescricao,
+                                        entradaAno);
         }
 
         private static string ObterOpcaoUsuario()
@@ -111,7 +108,7 @@ namespace DIO.Series
             Console.WriteLine("X- sair");
             Console.WriteLine();
 
-            string opcaoUsuario -Console.ReadLine().ToUpper();
+            string opcaoUsuario = Console.ReadLine().ToUpper();
             Console.WriteLine();
             return opcaoUsuario;
 
